@@ -13,6 +13,7 @@ func TestValidate(t *testing.T) {
 		{
 			"No Errors",
 			&ArgumentList{
+				Name:           "name",
 				Username:       "user",
 				Password:       "password",
 				Hostname:       "localhost",
@@ -22,8 +23,21 @@ func TestValidate(t *testing.T) {
 			false,
 		},
 		{
+			"No Name",
+			&ArgumentList{
+				Name:           "",
+				Username:       "user",
+				Password:       "password",
+				Hostname:       "localhost",
+				Port:           "90",
+				CollectionList: "{}",
+			},
+			true,
+		},
+		{
 			"No Username",
 			&ArgumentList{
+				Name:           "name",
 				Username:       "",
 				Password:       "password",
 				Hostname:       "localhost",
@@ -35,6 +49,7 @@ func TestValidate(t *testing.T) {
 		{
 			"No Password",
 			&ArgumentList{
+				Name:           "name",
 				Username:       "user",
 				Hostname:       "localhost",
 				Port:           "90",
@@ -45,6 +60,7 @@ func TestValidate(t *testing.T) {
 		{
 			"SSL and No Server Certificate",
 			&ArgumentList{
+				Name:                   "name",
 				Username:               "user",
 				Password:               "password",
 				Hostname:               "localhost",
@@ -59,6 +75,7 @@ func TestValidate(t *testing.T) {
 		{
 			"Missing Key file with Cert file",
 			&ArgumentList{
+				Name:                   "name",
 				Username:               "user",
 				Password:               "password",
 				Hostname:               "localhost",
@@ -74,6 +91,7 @@ func TestValidate(t *testing.T) {
 		{
 			"Missing Cert file with Key file",
 			&ArgumentList{
+				Name:                   "name",
 				Username:               "user",
 				Password:               "password",
 				Hostname:               "localhost",
@@ -96,4 +114,5 @@ func TestValidate(t *testing.T) {
 			t.Errorf("Test Case %s Failed: Unexpected error: %v", tc.name, err)
 		}
 	}
+
 }

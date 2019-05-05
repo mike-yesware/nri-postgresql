@@ -12,6 +12,7 @@ import (
 // ArgumentList struct that holds all PostgreSQL arguments
 type ArgumentList struct {
 	sdkArgs.DefaultArgumentList
+	Name                   string `default:"" help:"The name used to identify this databse within New Relic"`
 	Username               string `default:"" help:"The username for the PostgreSQL database"`
 	Password               string `default:"" help:"The password for the specified username"`
 	Hostname               string `default:"localhost" help:"The PostgreSQL hostname to connect to"`
@@ -38,6 +39,10 @@ type TableList map[string][]string
 
 // Validate validates PostgreSQl arguments
 func (al ArgumentList) Validate() error {
+	if al.Name == "" {
+		return errors.New("invalid configuration: must specify a database name for identification")
+	}
+
 	if al.Username == "" || al.Password == "" {
 		return errors.New("invalid configuration: must specify a username and password")
 	}
